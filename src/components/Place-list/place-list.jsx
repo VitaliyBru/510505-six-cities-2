@@ -3,16 +3,6 @@ import PropTypes from "prop-types";
 import {PlaceCard} from "../place-card/place-card.jsx";
 
 export class PlaceList extends PureComponent {
-  static getCardList(cardsList, onMouseEnter) {
-    cardsList.map((it, i) => {
-      return <PlaceCard
-        key={`card${it.id}-${i}`}
-        offerItem={it}
-        onMouseEnterCard={onMouseEnter}
-      />;
-    });
-  }
-
   constructor(props) {
     super(props);
 

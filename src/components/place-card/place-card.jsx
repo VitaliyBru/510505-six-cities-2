@@ -2,22 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const PlaceCard = (props) => {
-  const {cardName, onClick} = props;
+  const {
+    offerItem: {
+      "is_premium": isPremium,
+      "preview_image": srcImg,
+      price,
+      title,
+      type
+    },
+    onMouseEnterCard
+  } = props;
 
-  return <article className="cities__place-card place-card">
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
+  return <article className="cities__place-card place-card" onMouseEnter={() => {
+    onMouseEnterCard(props.offerItem);
+  }}>
+
+    {
+      isPremium && <div className="place-card__mark">
+        <span>Premium</span>
+      </div>
+    }
+
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">
-        <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200"
+        <img className="place-card__image" src={srcImg} width="260" height="200"
           alt="Place image"/>
       </a>
     </div>
     <div className="place-card__info">
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
-          <b className="place-card__price-value">&euro;120</b>
+          <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
         <button className="place-card__bookmark-button button" type="button">
@@ -34,15 +49,20 @@ export const PlaceCard = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href="#" onClick={onClick}>{cardName}</a>
+        <a href="#">{title}</a>
       </h2>
-      <p className="place-card__type">Apartment</p>
+      <p className="place-card__type">{type}</p>
     </div>
   </article>;
 };
 
 PlaceCard.propTypes = {
-  // key: PropTypes.string.isRequired,
-  cardName: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  offerItem: PropTypes.shape({
+    "is_premium": PropTypes.bool.isRequired,
+    "preview_image": PropTypes.string.isRequired,
+    "price": PropTypes.number.isRequired,
+    "title": PropTypes.string.isRequired,
+    "type": PropTypes.string.isRequired
+  }).isRequired,
+  onMouseEnterCard: PropTypes.func.isRequired
 };

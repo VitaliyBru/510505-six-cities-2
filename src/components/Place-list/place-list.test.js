@@ -1,11 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {App} from "./app.jsx";
+import {PlaceList} from "./place-list.jsx";
 
-it(`App correctly renders after relaunch`, () => {
+it(`PlaceList correctly renders after relaunch`, () => {
   const tree = renderer
     .create(
-        <App
+        <PlaceList
           offersList={[
             {
               "id": 0,
@@ -17,7 +17,8 @@ it(`App correctly renders after relaunch`, () => {
             }
           ]}
         />
-    ).toJSON();
+    )
+    .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

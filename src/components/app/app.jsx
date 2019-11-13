@@ -5,9 +5,11 @@ import {PlaceList} from "../Place-list/place-list.jsx";
 export const App = (props) => {
   const {offersList} = props;
 
-  return <PlaceList
-    offersList={offersList}
-  />;
+  return (
+    <PlaceList
+      offersList={offersList}
+    />
+  );
 };
 
 App.propTypes = {

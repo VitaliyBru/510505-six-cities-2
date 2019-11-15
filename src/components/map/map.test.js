@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {PlaceList} from "./place-list.jsx";
+import {Map} from "./map.jsx";
 
 it(`PlaceList correctly renders after relaunch`, () => {
   const div = global.document.createElement(`div`);
@@ -9,26 +9,20 @@ it(`PlaceList correctly renders after relaunch`, () => {
 
   const tree = renderer
     .create(
-        <PlaceList
+        <Map
           offersList={[
             {
-              "id": 0,
               "city": {
                 "location": {
                   "latitude": 0,
                   "longitude": 0,
                   "zoom": 0
-                }
+                },
               },
-              "is_premium": true,
-              "preview_image": `preview_image`,
-              "price": 0,
-              "title": `title`,
-              "type": `type`,
               "location": {
                 "latitude": 0,
                 "longitude": 0
-              }
+              },
             }
           ]}
         />

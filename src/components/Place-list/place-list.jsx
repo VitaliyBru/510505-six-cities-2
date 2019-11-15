@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {PlaceCard} from "../place-card/place-card.jsx";
+import {Map} from "../map/map.jsx";
 
 export class PlaceList extends PureComponent {
   constructor(props) {
@@ -100,7 +101,6 @@ export class PlaceList extends PureComponent {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-
                   {
                     offersList.map((it, i) => {
                       return (
@@ -112,11 +112,10 @@ export class PlaceList extends PureComponent {
                       );
                     })
                   }
-
                 </div>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"/>
+                <Map offersList={offersList}/>
               </div>
             </div>
           </div>

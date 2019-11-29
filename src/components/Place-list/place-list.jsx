@@ -2,8 +2,23 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {PlaceCard} from "../place-card/place-card.jsx";
 import {Map} from "../map/map.jsx";
+import {CitiesTabs} from "../cities-tabs/cities-tabs.jsx";
+
+const CITIES_AMOUNT = 6;
 
 export class PlaceList extends PureComponent {
+  static getCitiesList(allOffers) {
+    const result = [];
+    allOffers.some(({city: {name}}) => {
+      if (result.indexOf(name) === -1) {
+        result.push(name);
+      }
+      return result.length === CITIES_AMOUNT;
+    });
+
+    return result;
+  }
+
   constructor(props) {
     super(props);
 
@@ -11,11 +26,12 @@ export class PlaceList extends PureComponent {
       activeCard: {}
     };
 
+    this.citiesList = PlaceList.getCitiesList(props.allCitiesOffers);
     this._enterMouseHandler = this._enterMouseHandler.bind(this);
   }
 
   render() {
-    const {offersList} = this.props;
+    const {activeCity, allCitiesOffers, cityOffers, onCitySelection} = this.props;
 
     return (
       <div className="page page--gray page--main">
@@ -44,47 +60,17 @@ export class PlaceList extends PureComponent {
 
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
-          <div className="tabs">
-            <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
-            </section>
-          </div>
+          <CitiesTabs
+            activeCity={activeCity}
+            allCitiesOffers={allCitiesOffers}
+            citiesList={this.citiesList}
+            onCitySelection={onCitySelection}
+          />
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{cityOffers.length} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -102,7 +88,7 @@ export class PlaceList extends PureComponent {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {
-                    offersList.map((it, i) => {
+                    cityOffers.map((it, i) => {
                       return (
                         <PlaceCard
                           key={`card${it.id}-${i}`}
@@ -115,7 +101,7 @@ export class PlaceList extends PureComponent {
                 </div>
               </section>
               <div className="cities__right-section">
-                <Map offersList={offersList}/>
+                <Map cityOffers={cityOffers}/>
               </div>
             </div>
           </div>
@@ -134,5 +120,8 @@ export class PlaceList extends PureComponent {
 }
 
 PlaceList.propTypes = {
-  offersList: PropTypes.arrayOf(PropTypes.object).isRequired
+  allCitiesOffers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  activeCity: PropTypes.string,
+  cityOffers: PropTypes.arrayOf(PropTypes.object),
+  onCitySelection: PropTypes.func,
 };

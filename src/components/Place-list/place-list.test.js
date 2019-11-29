@@ -10,15 +10,16 @@ it(`PlaceList correctly renders after relaunch`, () => {
   const tree = renderer
     .create(
         <PlaceList
-          offersList={[
+          allCitiesOffers={[
             {
               "id": 0,
               "city": {
+                "name": ` `,
                 "location": {
                   "latitude": 0,
                   "longitude": 0,
-                  "zoom": 0
-                }
+                  "zoom": 0,
+                },
               },
               "is_premium": true,
               "preview_image": `preview_image`,
@@ -27,10 +28,15 @@ it(`PlaceList correctly renders after relaunch`, () => {
               "type": `type`,
               "location": {
                 "latitude": 0,
-                "longitude": 0
-              }
+                "longitude": 0,
+              },
             }
           ]}
+          activeCity={` `}
+          cityOffers={[]}
+          findOffersInCity={() => {}}
+          onCitySelection={() => {}}
+          setActiveCity={() => {}}
         />
     )
     .toJSON();

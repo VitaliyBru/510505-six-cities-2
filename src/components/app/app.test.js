@@ -10,10 +10,12 @@ it(`App correctly renders after relaunch`, () => {
   const tree = renderer
     .create(
         <App
-          offersList={[
+          activeCity={` `}
+          allCitiesOffers={[
             {
               "id": 0,
               "city": {
+                "name": ` `,
                 "location": {
                   "latitude": 0,
                   "longitude": 0,
@@ -31,6 +33,8 @@ it(`App correctly renders after relaunch`, () => {
               }
             }
           ]}
+          cityOffers={[]}
+          onCitySelection={() => {}}
         />
     ).toJSON();
 

@@ -10,7 +10,7 @@ it(`PlaceList correctly renders after relaunch`, () => {
   const tree = renderer
     .create(
         <Map
-          offersList={[
+          cityOffers={[
             {
               "city": {
                 "location": {

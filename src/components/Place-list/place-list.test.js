@@ -37,6 +37,8 @@ it(`PlaceList correctly renders after relaunch`, () => {
           findOffersInCity={() => {}}
           onCitySelection={() => {}}
           setActiveCity={() => {}}
+          onMouseEnterCard={() => {}}
+          renderMap={() => {}}
         />
     )
     .toJSON();

@@ -8,7 +8,10 @@ import {offers} from "./mock/offers.js";
 import {ActionCreator} from "./reducer.js";
 
 const init = () => {
-  const store = createStore(reducer);
+  const store = createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+  );
   store.dispatch(ActionCreator.setActiveCity(offers[0].city.name));
   store.dispatch(ActionCreator.findOffersInCity(offers));
 

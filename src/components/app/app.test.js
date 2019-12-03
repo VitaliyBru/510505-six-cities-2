@@ -33,7 +33,28 @@ it(`App correctly renders after relaunch`, () => {
               }
             }
           ]}
-          cityOffers={[]}
+          cityOffers={[
+            {
+              "id": 0,
+              "city": {
+                "name": ` `,
+                "location": {
+                  "latitude": 0,
+                  "longitude": 0,
+                  "zoom": 0
+                }
+              },
+              "is_premium": true,
+              "preview_image": `preview_image`,
+              "price": 0,
+              "title": `title`,
+              "type": `type`,
+              "location": {
+                "latitude": 0,
+                "longitude": 0
+              }
+            }
+          ]}
           onCitySelection={() => {}}
         />
     ).toJSON();

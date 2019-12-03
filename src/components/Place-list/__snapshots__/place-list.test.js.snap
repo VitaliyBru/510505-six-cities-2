@@ -107,7 +107,8 @@ exports[`PlaceList correctly renders after relaunch 1`] = `
             className="places__found"
           >
             0
-             places to stay in Amsterdam
+             places to stay in 
+             
           </b>
           <form
             action="#"
@@ -169,12 +170,7 @@ exports[`PlaceList correctly renders after relaunch 1`] = `
         </section>
         <div
           className="cities__right-section"
-        >
-          <section
-            className="cities__map map"
-            id="map"
-          />
-        </div>
+        />
       </div>
     </div>
   </main>

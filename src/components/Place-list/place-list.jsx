@@ -27,11 +27,10 @@ export class PlaceList extends PureComponent {
     };
 
     this.citiesList = PlaceList.getCitiesList(props.allCitiesOffers);
-    this._enterMouseHandler = this._enterMouseHandler.bind(this);
   }
 
   render() {
-    const {activeCity, allCitiesOffers, cityOffers, onCitySelection} = this.props;
+    const {activeCity, allCitiesOffers, cityOffers, onCitySelection, onMouseEnterCard, renderMap} = this.props;
 
     return (
       <div className="page page--gray page--main">
@@ -70,7 +69,7 @@ export class PlaceList extends PureComponent {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{cityOffers.length} places to stay in Amsterdam</b>
+                <b className="places__found">{cityOffers.length} places to stay in {activeCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -93,7 +92,7 @@ export class PlaceList extends PureComponent {
                         <PlaceCard
                           key={`card${it.id}-${i}`}
                           offerItem={it}
-                          onMouseEnterCard={this._enterMouseHandler}
+                          onMouseEnterCard={onMouseEnterCard}
                         />
                       );
                     })
@@ -101,21 +100,13 @@ export class PlaceList extends PureComponent {
                 </div>
               </section>
               <div className="cities__right-section">
-                <Map cityOffers={cityOffers}/>
+                {renderMap(cityOffers)}
               </div>
             </div>
           </div>
         </main>
       </div>
     );
-  }
-
-  _enterMouseHandler(currentCard) {
-    this.setState(() => {
-      return {
-        activeCard: currentCard
-      };
-    });
   }
 }
 
@@ -124,4 +115,6 @@ PlaceList.propTypes = {
   activeCity: PropTypes.string,
   cityOffers: PropTypes.arrayOf(PropTypes.object),
   onCitySelection: PropTypes.func,
+  onMouseEnterCard: PropTypes.func.isRequired,
+  renderMap: PropTypes.func.isRequired,
 };

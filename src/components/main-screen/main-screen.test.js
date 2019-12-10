@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {PlaceList} from "./place-list.jsx";
+import {MainScreen} from "./main-screen.jsx";
 
 it(`PlaceList correctly renders after relaunch`, () => {
   const div = global.document.createElement(`div`);
@@ -9,7 +9,7 @@ it(`PlaceList correctly renders after relaunch`, () => {
 
   const tree = renderer
     .create(
-        <PlaceList
+        <MainScreen
           allCitiesOffers={[
             {
               "id": 0,

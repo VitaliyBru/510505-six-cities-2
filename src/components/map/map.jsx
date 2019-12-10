@@ -33,9 +33,14 @@ export class Map extends PureComponent {
 
   componentDidMount() {
     const {cityOffers} = this.props;
-    const cityLatitude = cityOffers[FIRST_IN_ARRAY].city.location.latitude ? cityOffers[FIRST_IN_ARRAY].city.location.latitude : 0;
-    const cityLongitude = cityOffers[FIRST_IN_ARRAY].city.location.longitude ? cityOffers[FIRST_IN_ARRAY].city.location.longitude : 0;
-    const cityZoom = cityOffers[FIRST_IN_ARRAY].city.location.zoom ? cityOffers[FIRST_IN_ARRAY].city.location.zoom : 12;
+    const isCityDefined = cityOffers.length
+        && cityOffers[FIRST_IN_ARRAY].hasOwnProperty(`city`)
+        && cityOffers[FIRST_IN_ARRAY].city.hasOwnProperty(`location`)
+        && cityOffers[FIRST_IN_ARRAY].city.hasOwnProperty(`longitude`)
+        && cityOffers[FIRST_IN_ARRAY].city.hasOwnProperty(`zoom`);
+    const cityLatitude = isCityDefined ? cityOffers[FIRST_IN_ARRAY].city.location.latitude : 0;
+    const cityLongitude = isCityDefined ? cityOffers[FIRST_IN_ARRAY].city.location.longitude : 0;
+    const cityZoom = isCityDefined ? cityOffers[FIRST_IN_ARRAY].city.location.zoom : 12;
 
     // Инициализирует карту
     this.map = leaflet.map(`map`, {
@@ -90,6 +95,9 @@ export class Map extends PureComponent {
   }
 
   _setPinToTheMap(offers) {
+    if (!offers.length) {
+      return;
+    }
     const [{city: {location}}] = offers;
     this.map.setView(
         [

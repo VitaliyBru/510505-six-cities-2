@@ -34,10 +34,10 @@ export class CitiesTabs extends PureComponent {
   }
 
   _handlerTabClick(evt) {
-    const {onCitySelection, allCitiesOffers} = this.props;
+    const {onCitySelection} = this.props;
 
     evt.preventDefault();
-    onCitySelection(evt.currentTarget.firstChild.innerText, allCitiesOffers);
+    onCitySelection(evt.currentTarget.firstChild.innerText);
   }
 }
 

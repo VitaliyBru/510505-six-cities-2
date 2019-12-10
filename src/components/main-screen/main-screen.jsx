@@ -1,12 +1,12 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {PlaceCard} from "../place-card/place-card.jsx";
-import {Map} from "../map/map.jsx";
 import {CitiesTabs} from "../cities-tabs/cities-tabs.jsx";
 
 const CITIES_AMOUNT = 6;
+const FIRST_IN_ARRAY = 0;
 
-export class PlaceList extends PureComponent {
+export class MainScreen extends PureComponent {
   static getCitiesList(allOffers) {
     const result = [];
     allOffers.some(({city: {name}}) => {
@@ -22,15 +22,21 @@ export class PlaceList extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeCard: {}
-    };
-
-    this.citiesList = PlaceList.getCitiesList(props.allCitiesOffers);
+    this.citiesList = [];
   }
 
   render() {
-    const {activeCity, allCitiesOffers, cityOffers, onCitySelection, onMouseEnterCard, renderMap} = this.props;
+    const {allCitiesOffers, cityOffers, onCitySelection, onMouseEnterCard, renderMap} = this.props;
+    let {activeCity} = this.props;
+
+    if (!activeCity && allCitiesOffers.length) {
+      activeCity = allCitiesOffers[FIRST_IN_ARRAY].city.name;
+      onCitySelection(activeCity);
+    }
+
+    if (!this.citiesList.length && allCitiesOffers.length) {
+      this.citiesList = MainScreen.getCitiesList(allCitiesOffers);
+    }
 
     return (
       <div className="page page--gray page--main">
@@ -110,7 +116,7 @@ export class PlaceList extends PureComponent {
   }
 }
 
-PlaceList.propTypes = {
+MainScreen.propTypes = {
   allCitiesOffers: PropTypes.arrayOf(PropTypes.object).isRequired,
   activeCity: PropTypes.string,
   cityOffers: PropTypes.arrayOf(PropTypes.object),

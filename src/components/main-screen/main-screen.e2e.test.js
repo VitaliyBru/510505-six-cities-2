@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {PlaceList} from "./place-list.jsx";
+import {MainScreen} from "./main-screen.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -10,7 +10,7 @@ it(`PlaceList OK`, () => {
   const mockRenderMap = jest.fn();
 
   const placeList = mount(
-      <PlaceList
+      <MainScreen
         allCitiesOffers={[
           {
             "id": 0,

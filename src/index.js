@@ -1,23 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
+import {compose} from "recompose";
+import thunk from "redux-thunk";
 import {Provider} from "react-redux";
+
 import App from "./components/app/app.jsx";
-import {reducer} from "./reducer.js";
-import {offers} from "./mock/offers.js";
-import {ActionCreator} from "./reducer.js";
+import reducer from "./reducer/index";
+import {Operation} from "./reducer/data/data";
+import createAPI from "./api";
 
 const init = () => {
+  const api = createAPI((...args) => store.dispatch(...args));
   const store = createStore(
       reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      compose(
+          applyMiddleware(thunk.withExtraArgument(api)),
+          window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      )
   );
-  store.dispatch(ActionCreator.setActiveCity(offers[0].city.name));
-  store.dispatch(ActionCreator.findOffersInCity(offers));
+  store.dispatch(Operation.downloadOffers());
 
   ReactDOM.render(
       <Provider store={store}>
-        <App allCitiesOffers={offers}/>
+        <App/>
       </Provider>,
       document.getElementById(`root`)
   );

@@ -23,5 +23,5 @@ it(`CitiesTabs correct`, () => {
 
   expect(preventDefault).toHaveBeenCalledTimes(1);
   expect(onCitySelection).toHaveBeenCalledTimes(1);
-  expect(onCitySelection).toHaveBeenCalledWith(`city-1`, []);
+  expect(onCitySelection).toHaveBeenCalledWith(`city-1`);
 });

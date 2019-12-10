@@ -1,17 +1,19 @@
 import React from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {PlaceList} from "../Place-list/place-list.jsx";
-import {ActionCreator} from "../../reducer.js";
+
+import {MainScreen} from "../main-screen/main-screen.jsx";
+import {getAllCitiesOffers, getOffersForCity, getCity} from "../../reducer/data/selectors";
+import {ActionCreator, Operation} from "../../reducer/data/data";
 import withMap from "../../hocs/with-map/with-map";
 
-const PlaceListWrapped = withMap(PlaceList);
+const MainScreenWrapped = withMap(MainScreen);
 
 const App = (props) => {
   const {activeCity, allCitiesOffers, cityOffers, onCitySelection} = props;
 
   return (
-    <PlaceListWrapped
+    <MainScreenWrapped
       activeCity={activeCity}
       allCitiesOffers={allCitiesOffers}
       cityOffers={cityOffers}
@@ -28,14 +30,15 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.activeCity,
-  cityOffers: state.cityOffers,
+  activeCity: getCity(state),
+  allCitiesOffers: getAllCitiesOffers(state),
+  cityOffers: getOffersForCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCitySelection: (newCity, allOffers) => {
-    dispatch(ActionCreator.setActiveCity(newCity));
-    dispatch(ActionCreator.findOffersInCity(allOffers));
+  onCitySelection: (newCity) => {
+    dispatch(ActionCreator.setCity(newCity));
+    dispatch(Operation.downloadOffers());
   },
 });
 
